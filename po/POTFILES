@@ -1,0 +1,6 @@
+data/fr.daemonwhite.sortpictureresolve.desktop.in
+data/fr.daemonwhite.sortpictureresolve.appdata.xml.in
+data/fr.daemonwhite.sortpictureresolve.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

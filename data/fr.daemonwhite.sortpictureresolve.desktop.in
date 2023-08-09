@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=sortpictureresolve-gui
+Exec=sortpictureresolve-gui
+Icon=fr.daemonwhite.sortpictureresolve
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
