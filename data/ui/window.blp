@@ -1,0 +1,41 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SortpictureresolveGuiWindow : $AdwApplicationWindow {
+  default-width: 600;
+  default-height: 300;
+  Gtk.Box {
+    orientation: vertical;
+    [titlebar]
+    Gtk.HeaderBar {
+      [end]
+      Gtk.MenuButton {
+
+        icon-name: 'open-menu-symbolic';
+        menu-model: primary_menu;
+      }
+    }
+    Gtk.Label {
+      label: "Hello, World";
+      vexpand: true;
+      styles ["title-1"]
+    }
+  }
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: "_Preferences";
+      action: "app.preferences";
+    }
+   item {
+      label: "_Keyboard Shortcuts";
+      action: "win.show-help-overlay";
+    }
+    item {
+      label: "_About SortPictureResolve-gui";
+      action: "app.about";
+    }
+  }
+}
