@@ -7,12 +7,16 @@ project('sortpictureresolve-gui',
 i18n = import('i18n')
 gnome = import('gnome')
 python = import('python')
+py_installation = python.find_installation('python3')
 
 subdir('src')
 subdir('data')
 subdir('po')
 
-install_data('sortPictureReso')
+install_subdir(
+	'sortPictureReso/sortpicturereso/LibPictureSorter',
+	install_dir: py_installation.get_install_dir()
+)
 
 gnome.post_install(
      glib_compile_schemas: true,

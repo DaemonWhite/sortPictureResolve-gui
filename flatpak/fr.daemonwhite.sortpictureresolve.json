@@ -23,6 +23,8 @@
         "*.a"
     ],
     "modules" : [
+    	"python3-pillow.json",
+        "python3-pyxdg.json",
         {
             "name" : "sortpictureresolve-gui",
             "builddir" : true,
