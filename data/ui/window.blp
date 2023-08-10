@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $SortpictureresolveGuiWindow : $AdwApplicationWindow {
+template SortpictureresolveGuiWindow : .AdwApplicationWindow {
   default-width: 600;
   default-height: 300;
   Gtk.Box {
@@ -15,10 +15,35 @@ template $SortpictureresolveGuiWindow : $AdwApplicationWindow {
         menu-model: primary_menu;
       }
     }
-    Gtk.Label {
-      label: "Hello, World";
+    Gtk.Box main_box {
+      visible: true;
+      orientation: horizontal;
+      spacing : 10;
+      valign: center;
+      halign: center;
       vexpand: true;
-      styles ["title-1"]
+      hexpand: true;
+      Gtk.Label current_activity {
+        label: "";
+      }
+      Gtk.Button search_image {
+        label: "Trier les Images";
+        styles ["suggested-action"]
+      }
+      Gtk.ProgressBar wait_bar {
+      }
+
+      Gtk.FlowBox flow_picture_box{
+      visible: false;
+      orientation: horizontal;
+      homogeneous: true;
+      row-spacing: 6;
+      column-spacing: 6;
+        Gtk.Button {
+          label: "Tu est beau";
+          styles ["suggested-action"]
+        }
+      }
     }
   }
 }

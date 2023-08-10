@@ -24,5 +24,5 @@ sortpictureresolve_gui_sources = [
   'main.py',
   'window.py',
 ]
-
+install_subdir('picturecardcontroller', install_dir: pkgdatadir)
 install_data(sortpictureresolve_gui_sources, install_dir: moduledir)
