@@ -1,6 +1,6 @@
-import os
-
 from .PictureCard import PictureCard
+
+#TODO Support des erreur
 
 class PictureCardController(object):
 
@@ -18,7 +18,12 @@ class PictureCardController(object):
 
     def generate_card(self):
         for key in self.__config:
-            path = os.path.join(self.__main_path, self.config)
-            pc = PictureCard()
-            self.__window.flow_picture_box.append(pc)
+            for picture in self.__config[key]:
+                try:
+                    pc = PictureCard(self.__main_path, picture)
+                    self.__window.flow_picture_box.append(pc)
+                except:
+                    print('Image non reconue')
+
+
 

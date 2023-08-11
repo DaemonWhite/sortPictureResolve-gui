@@ -1,4 +1,4 @@
-
+from threading import Thread
 from gi.repository import Adw, Gtk, GLib
 
 from LibPictureSorter import Picture_sorter
@@ -18,6 +18,8 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
         self.__ps = Picture_sorter()
         self.__ps.default_coef()
+        self.__ps.remove_extention(".gif")
+        self.__ps.set_picture_in_path("/home/matheo/Images/Font d'écran/a trier/")
         self.__pcc = PictureCardController(self)
         self.add_action()
         self.wait_bar.set_pulse_step(0.5)
@@ -30,27 +32,31 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         return self.wait_bar.is_visible()
 
     def add_action(self):
-        self.search_images_button.connect('clicked', self.on_search_image )
+        self.search_images_button.connect('clicked', self.on_search_images )
 
-    def on_search_image(self, _btn):
-        self.wait_bar.set_visible(True)
-        self.search_images_button.set_visible(False)
-        self.te = GLib.timeout_add(500, self.update_pulse)
+    def thread_start_images(self):
         self.__ps.search_images()
         self.__ps.generate__list_sort_image()
+        self.__ps.resolve()
         if  0 < self.__ps.get_max_image():
             path = self.__ps.get_picture_in_path()
-            picture_search = self.__ps.get_search_images()
+            picture_search = self.__ps.get_resolve_image()
             self.__pcc.set_path(path)
             self.__pcc.set_config(picture_search)
             print(picture_search)
-            self.flow_picture_box.set_visible(True)
             self.__pcc.generate_card()
-            #self.flow_picture_box.append(pc)
+            self.flow_picture_box.set_visible(True)
         else:
             self.search_images_button.set_visible(True)
 
         self.wait_bar.set_visible(False)
+
+    def on_search_images(self, _btn):
+        search = Thread(target=self.thread_start_images)
+        self.wait_bar.set_visible(True)
+        self.search_images_button.set_visible(False)
+        self.te = GLib.timeout_add(500, self.update_pulse)
+        search.start()
 
 
 

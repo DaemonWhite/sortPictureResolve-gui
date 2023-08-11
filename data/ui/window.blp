@@ -36,14 +36,14 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
 
         Gtk.FlowBox flow_picture_box{
         visible: false;
+        vexpand: true;
+        hexpand: true;
         orientation: horizontal;
         homogeneous: true;
-        row-spacing: 6;
-        column-spacing: 6;
-          Gtk.Button {
-            label: "Tu est beau";
-            styles ["suggested-action"]
-          }
+        row-spacing: 4;
+        column-spacing: 4;
+        min-children-per-line: 1;
+        max-children-per-line: 6;
         }
       }
     }
