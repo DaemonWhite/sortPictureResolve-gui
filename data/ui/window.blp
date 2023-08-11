@@ -15,6 +15,24 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
         menu-model: primary_menu;
       }
     }
+    Gtk.Box controller_bar {
+      visible: false;
+      margin-start: 5;
+      margin-end: 5;
+      margin-top: 5;
+      margin-bottom: 5;
+      spacing: 2;
+      Gtk.Button list_view_button {
+        icon-name: "view-list-symbolic";
+      }
+      Gtk.Button sort_button{
+        label: "Lancer le trie";
+        styles ["suggested-action"]
+      }
+    }
+    Gtk.Separator {
+        hexpand: true;
+      }
     Gtk.ScrolledWindow {
       Gtk.Box main_box {
         visible: true;
@@ -28,7 +46,7 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
           label: "";
         }
         Gtk.Button search_image {
-          label: "Trier les Images";
+          label: "Chercher des Images";
           styles ["suggested-action"]
         }
         Gtk.ProgressBar wait_bar {
