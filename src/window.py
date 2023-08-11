@@ -2,7 +2,7 @@
 from gi.repository import Adw, Gtk, GLib
 
 from LibPictureSorter import Picture_sorter
-from sortpictureresolve_gui.picturecardcontroller import PictureCardController
+from picturecardcontroller import PictureCardController
 
 
 @Gtk.Template(resource_path='/fr/daemonwhite/sortpictureresolve/window.ui')
@@ -39,8 +39,14 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.__ps.search_images()
         self.__ps.generate__list_sort_image()
         if  0 < self.__ps.get_max_image():
+            path = self.__ps.get_picture_in_path()
+            picture_search = self.__ps.get_search_images()
+            self.__pcc.set_path(path)
+            self.__pcc.set_config(picture_search)
+            print(picture_search)
             self.flow_picture_box.set_visible(True)
-            self.flow_picture_box.append(pc)
+            self.__pcc.generate_card()
+            #self.flow_picture_box.append(pc)
         else:
             self.search_images_button.set_visible(True)
 
@@ -50,3 +56,4 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
 
     def on_startup(self):
         pass
+

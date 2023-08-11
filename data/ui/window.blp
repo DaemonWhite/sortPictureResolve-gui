@@ -15,33 +15,35 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
         menu-model: primary_menu;
       }
     }
-    Gtk.Box main_box {
-      visible: true;
-      orientation: horizontal;
-      spacing : 10;
-      valign: center;
-      halign: center;
-      vexpand: true;
-      hexpand: true;
-      Gtk.Label current_activity {
-        label: "";
-      }
-      Gtk.Button search_image {
-        label: "Trier les Images";
-        styles ["suggested-action"]
-      }
-      Gtk.ProgressBar wait_bar {
-      }
-
-      Gtk.FlowBox flow_picture_box{
-      visible: false;
-      orientation: horizontal;
-      homogeneous: true;
-      row-spacing: 6;
-      column-spacing: 6;
-        Gtk.Button {
-          label: "Tu est beau";
+    Gtk.ScrolledWindow {
+      Gtk.Box main_box {
+        visible: true;
+        orientation: horizontal;
+        spacing : 10;
+        valign: center;
+        halign: center;
+        vexpand: true;
+        hexpand: true;
+        Gtk.Label current_activity {
+          label: "";
+        }
+        Gtk.Button search_image {
+          label: "Trier les Images";
           styles ["suggested-action"]
+        }
+        Gtk.ProgressBar wait_bar {
+        }
+
+        Gtk.FlowBox flow_picture_box{
+        visible: false;
+        orientation: horizontal;
+        homogeneous: true;
+        row-spacing: 6;
+        column-spacing: 6;
+          Gtk.Button {
+            label: "Tu est beau";
+            styles ["suggested-action"]
+          }
         }
       }
     }
