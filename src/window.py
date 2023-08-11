@@ -23,7 +23,8 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.__ps = Picture_sorter()
-        self.__ps.set_event_progrres_move(self.sort_images)
+        self.__ps.set_event_progress_move(self.sort_images)
+        self.__ps.set_event_end_move(self.finish_sort_image)
         self.__ps.enabled_copie_mode()
         self.__ps.default_coef()
         self.__ps.remove_extention(".gif")
@@ -79,6 +80,9 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(False)
 
+    def finish_sort_image(self):
+        self.reset_view()
+
     def sort_images(self):
         GLib.timeout_add(
             10,
@@ -91,7 +95,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.wait_bar.set_fraction(0)
         sort = Thread(target=self.__ps.apply_resolve)
         self.loading_view()
-        sort.run()
+        sort.start()
 
 
     def on_search_images(self, _btn):
@@ -99,8 +103,6 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.loading_view()
         self.te = GLib.timeout_add(500, self.update_pulse)
         search.start()
-
-
 
     def on_startup(self):
         pass
