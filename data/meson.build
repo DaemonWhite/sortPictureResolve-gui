@@ -1,3 +1,5 @@
+pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
+
 desktop_file = i18n.merge_file(
         input: 'fr.daemonwhite.sortpictureresolve.desktop.in',
        output: 'fr.daemonwhite.sortpictureresolve.desktop',
@@ -37,4 +39,21 @@ if compile_schemas.found()
 endif
 
 subdir('icons')
-subdir('ui')
+
+
+
+blueprints = custom_target('blueprints',
+  input: files(
+    'ui/window.blp'
+),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
+gnome.compile_resources('sortpictureresolve-gui',
+  'sortpictureresolve-gui.gresource.xml',
+  gresource_bundle: true,
+  dependencies: blueprints,
+  install: true,
+  install_dir: pkgdatadir,
+)

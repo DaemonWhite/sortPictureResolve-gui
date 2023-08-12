@@ -1,5 +1,5 @@
 import os
-from gi.repository import Gtk, GdkPixbuf
+from gi.repository import Gtk, GdkPixbuf, Pango
 
 #TODO Ajouter une fonction de trie dans FlowBox
 
@@ -16,9 +16,15 @@ class PictureCard(Gtk.FlowBoxChild):
         super().__init__(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER)
         self.main_input = os.path.join(path, name)
         self.__box = Gtk.Box()
+        self.__box.add_css_class("picture-card-box")
         self.__box.set_orientation(Gtk.Orientation.VERTICAL)
         self.__label = Gtk.Label()
-        self.__label.set_label(self.limit_char_name(name))
+        self.__label.add_css_class("te")
+        self.__label.set_label(name)
+        self.__label.set_lines(1)
+        self.__label.set_wrap(True)
+        self.__label.set_max_width_chars(0)
+        self.__label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
         print(self.main_input)
         self.__pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(self.main_input, self.default_width, self.default_heigth)
         self.__picture = Gtk.Picture.new_for_pixbuf(self.__pixbuf)

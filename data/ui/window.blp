@@ -8,6 +8,11 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
     orientation: vertical;
     [titlebar]
     Gtk.HeaderBar {
+      [start]
+      Adw.SplitButton open_picture_folder {
+        label: "Ouvrir";
+        styles ["suggested-action"]
+      }
       [end]
       Gtk.MenuButton {
 
@@ -47,7 +52,7 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
         }
         Gtk.Button search_image {
           label: "Chercher des Images";
-          styles ["suggested-action"]
+          styles ["suggested-action", "pill", "title-1"]
         }
         Gtk.ProgressBar wait_bar {
         }
