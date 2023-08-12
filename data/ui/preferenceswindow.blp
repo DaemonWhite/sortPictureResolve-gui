@@ -1,0 +1,65 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PreferencesWindow : .AdwPreferencesWindow {
+  default-width: 600;
+  default-height:600;
+
+  Adw.PreferencesPage {
+    title: "Localisation";
+    name: "Localisation";
+    Adw.PreferencesGroup {
+      title: "Chemin par defaut";
+      Adw.ActionRow {
+        title: "Chemin de sortie";
+        subtitle: "Définie ou les images seront stocker";
+        activatable-widget: open_out;
+        Gtk.Button open_out{
+          label: "Ouvrir";
+          halign: center;
+          valign: center;
+        }
+      }
+      Adw.ActionRow {
+        title: "Chemin d'entrée";
+        subtitle: "Définie ou les images seront chercher";
+        activatable-widget: open_in;
+        Gtk.Button open_in{
+          label: "Ouvrir";
+          halign: center;
+          valign: center;
+        }
+      }
+    }
+    Adw.PreferencesGroup {
+      title: "Mode";
+      description: "Définie les régles de recherche et de déplacement des image";
+      Adw.ActionRow {
+        title: "Mode Recursif";
+        subtitle: "Active la recherche dans les sous-dossier";
+        activatable-widget: switch_recursif;
+        Gtk.Switch switch_recursif {
+          halign: center;
+          valign: center;
+        }
+      }
+      Adw.ActionRow {
+          title: "Mode Copie";
+          subtitle: "Copie les images plustôt que de les déplacer";
+          activatable-widget: switch_copie;
+          Gtk.Switch switch_copie {
+            halign: center;
+            valign: center;
+          }
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    title: "Ratio";
+
+    Adw.PreferencesGroup {
+    }
+  }
+
+}

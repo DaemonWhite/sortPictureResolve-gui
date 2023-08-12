@@ -1,6 +1,8 @@
 from threading import Thread
 from gi.repository import Adw, Gtk, Gdk,GLib, Gio
 
+from .preferences_window import PreferencesWindow
+
 from LibPictureSorter import Picture_sorter
 from picturecardcontroller import PictureCardController
 
@@ -23,6 +25,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.__application = kwargs["application"]
         self.__FileDialog = Gtk.FileDialog.new()
         self.__ps = Picture_sorter()
         self.__ps.set_event_progress_move(self.sort_images)
@@ -44,6 +47,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.search_images_button.connect('clicked', self.on_search_images )
         self.sort_button.connect("clicked", self.on_sort_images)
         self.open_picture_folder.connect("clicked", self.on_choose_folder_button)
+        self.__application.create_action('preferences', self.on_preferences_action)
 
     def thread_start_images(self):
         self.__ps.search_images()
@@ -100,6 +104,10 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
             self.__pcc.reset()
         except GLib.Error as error:
             print(f"Error opening folder: {error.message}")
+
+    def on_preferences_action(self, widget, _):
+        """Callback for the app.preferences action."""
+        pw = PreferencesWindow(self)
 
 
     def on_choose_folder_button(self, _ptn):

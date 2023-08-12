@@ -23,6 +23,7 @@ sortpictureresolve_gui_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'preferences_window.py'
 ]
 install_subdir('picturecardcontroller', install_dir: pkgdatadir)
 install_data(sortpictureresolve_gui_sources, install_dir: moduledir)
