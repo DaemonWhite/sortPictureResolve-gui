@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="sortpictureresolve-gui">
 	<schema id="fr.daemonwhite.sortpictureresolve" path="/fr/daemonwhite/sortpictureresolve/">
+	  <key name="path_out" type="s">
+      <default>""</default>
+      <summary>Chemin de sortie des images</summary>
+    </key>
+	  <key name="path_in" type="s">
+      <default>""</default>
+      <summary>Chemin d'entrer des images</summary>
+    </key>"
+	  <key name="recusif_mode" type="b">
+	    <default>true</default>
+	    <summary>Mode Recursif</summary>
+	    <description>Cherche dans les sous dossier</description>
+	  </key>
+	  <key name="copy_mode" type="b">
+	    <default>false</default>
+	    <summary>Mode copie</summary>
+	    <description>Copie les images au lieux de les déplacer</description>
+	  </key>
+	  <key name="terminal_mode" type="b">
+	    <default>true</default>
+	    <summary>Termina mode</summary>
+	    <description>Permet de partager la configuration avec le mode terminals</description>
+	  </key>
+	  <key name="first_start" type="b">
+	    <default>true</default>
+	    <summary>Premier demarage</summary>
+	    <description>Permet de faire la configuration au premier démarage</description>
+	  </key>
 	</schema>
 </schemalist>
