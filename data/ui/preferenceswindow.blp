@@ -52,6 +52,17 @@ template PreferencesWindow : .AdwPreferencesWindow {
             valign: center;
           }
       }
+      Adw.ActionRow {
+          title: "Réglages Terminal";
+          subtitle: "Partagès la configuration avec la version terminal";
+          activatable-widget: switch_terminal;
+          Gtk.Switch switch_terminal {
+            halign: center;
+            valign: center;
+          }
+      }
+
+
     }
   }
 
@@ -59,6 +70,15 @@ template PreferencesWindow : .AdwPreferencesWindow {
     title: "Ratio";
 
     Adw.PreferencesGroup {
+      title: "Liste des ratio";
+      [header-suffix]
+      Gtk.Button {
+        Adw.ButtonContent {
+          label: "Ajouter";
+          icon-name: "value-increase-symbolic";
+        }
+      }
+
     }
   }
 
