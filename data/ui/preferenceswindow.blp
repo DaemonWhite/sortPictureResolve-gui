@@ -46,8 +46,8 @@ template PreferencesWindow : .AdwPreferencesWindow {
       Adw.ActionRow {
           title: "Mode Copie";
           subtitle: "Copie les images plustôt que de les déplacer";
-          activatable-widget: switch_copie;
-          Gtk.Switch switch_copie {
+          activatable-widget: switch_copy;
+          Gtk.Switch switch_copy {
             halign: center;
             valign: center;
           }
@@ -61,8 +61,6 @@ template PreferencesWindow : .AdwPreferencesWindow {
             valign: center;
           }
       }
-
-
     }
   }
 
@@ -72,7 +70,7 @@ template PreferencesWindow : .AdwPreferencesWindow {
     Adw.PreferencesGroup {
       title: "Liste des ratio";
       [header-suffix]
-      Gtk.Button {
+      Gtk.Button button_add {
         Adw.ButtonContent {
           label: "Ajouter";
           icon-name: "value-increase-symbolic";

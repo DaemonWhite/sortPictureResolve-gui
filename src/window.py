@@ -8,13 +8,14 @@ from gi.repository import (
 )
 
 from .preferences_window import PreferencesWindow
+from .configurationmanager import ConfigurationManager
 
-from LibPictureSorter import Picture_sorter, ConfigPictureSorter
+from LibPictureSorter import Picture_sorter
 from picturecardcontroller import PictureCardController
 
 
 @Gtk.Template(resource_path='/fr/daemonwhite/sortpictureresolve/ui/window.ui')
-class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
+class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
     __gtype_name__ = 'SortpictureresolveGuiWindow'
 
     APPID = "fr.daemonwhite.sortpictureresolve"
@@ -32,23 +33,35 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        ConfigurationManager.__init__(self, APPID=self.APPID)
         self.__application = kwargs["application"]
-        self.__settings = Gio.Settings(self.APPID)
+
         self.__FileDialog = Gtk.FileDialog.new()
-        self.__cps = ConfigPictureSorter()
-        self.__cps.load()
-        self.load_configuration()
+
         self.__ps = Picture_sorter()
         self.__ps.set_event_progress_move(self.sort_images)
         self.__ps.set_event_end_move(self.finish_sort_image)
-        self.__ps.enabled_copie_mode()
-        self.__ps.default_coef()
-        self.__ps.remove_extention(".gif")
+
+        self.apply_settings()
+
         self.__pcc = PictureCardController(self)
+
         self.add_action()
+
         self.wait_bar.set_pulse_step(0.5)
         self.wait_bar.set_visible(False)
+
         self.update_pulse()
+
+    def apply_settings(self):
+        self.__ps.enabled_copie_mode(self.get_copy())
+        self.__ps.default_coef()
+        try :
+            self.__ps.remove_extention(".gif")
+        except:
+            print("impossible remove image")
+
+
 
     def update_pulse(self):
         self.wait_bar.pulse()
@@ -95,35 +108,6 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow):
         self.controller_bar_box.set_visible(True)
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(False)
-
-    def load_json_configuration(self):
-        self.__copy_mode = self.__cps.get_copy()
-
-        self.__path_in = self.__cps.get_path_in()
-        self.__path_out = self.__cps.get_path_out()
-
-        # TODO Changer par la version terminal
-        self.__recursif_mode = self.__settings.get_boolean("recursif-mode")
-
-    def load_gschema_configuration(self):
-        self.__copy_mode = self.__settings.get_boolean("copy-mode")
-        self.__recursif_mode = self.__settings.get_boolean("recursif-mode")
-
-        self.__path_in = self.__settings.get_string("path-in")
-        self.__path_out = self.__settings.get_string("path-out")
-
-    def load_configuration(self):
-        self.__terminal_mode = self.__settings.get_boolean("terminal-mode")
-
-        if self.__settings.get_boolean("first-start"):
-            if self.__cps.get_default():
-                self.reset_json_configuration()
-
-        if self.__terminal_mode:
-            self.load_json_configuration()
-        else:
-            self.load_gschema_configuration()
-
 
 
     def reset_json_configuration(self):
