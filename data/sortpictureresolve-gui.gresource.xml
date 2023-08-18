@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/fr/daemonwhite/sortpictureresolve">
-
+    <file preprocess="xml-stripblanks" alias="org.gnome.settings-symbolic">icons/hicolor/scalable/actions/org.gnome.Settings-symbolic.svg</file>
     <file compressed="true" alias="style.css">css/style.css</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/preferenceswindow.ui</file>
