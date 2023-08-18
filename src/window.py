@@ -55,6 +55,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
 
     def apply_settings(self):
         self.__ps.enabled_copie_mode(self.get_copy())
+        self.__ps.enabled_recursif_mode(self.get_recursif())
         self.__ps.default_coef()
         try :
             self.__ps.remove_extention(".gif")
@@ -84,31 +85,33 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
             self.__pcc.set_path(path)
             self.__pcc.set_config(picture_search)
             print(picture_search)
-            self.__pcc.generate_card()
+            self.__pcc.generate()
             self.picture_view()
         else:
-            self.reset()
+            self.reset_view()
 
         self.wait_bar.set_visible(False)
 
     def reset_view(self):
+        self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
         self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)
         self.wait_bar.set_visible(False)
         self.search_images_button.set_visible(True)
 
     def loading_view(self):
+        self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
         self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(True)
 
     def picture_view(self):
+        self.main_box.set_orientation(Gtk.Orientation.VERTICAL)
         self.flow_picture_box.set_visible(True)
         self.controller_bar_box.set_visible(True)
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(False)
-
 
     def reset_json_configuration(self):
         pc_old = [1800, 1200]
