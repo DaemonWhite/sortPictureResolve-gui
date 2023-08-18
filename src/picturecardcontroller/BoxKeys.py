@@ -1,6 +1,12 @@
+import concurrent.futures
+import multiprocessing
+
 from gi.repository import Gtk, GdkPixbuf, Pango
 
 from .PictureCard import PictureCard
+
+def thread_generate_card(min):
+        return min
 
 class BoxKey(Gtk.Box):
     LEN_CARD_DEFAULLT = int(0)
@@ -13,8 +19,12 @@ class BoxKey(Gtk.Box):
             orientation=Gtk.Orientation.VERTICAL,
             visible=False
         )
+        self.__core = multiprocessing.cpu_count()
         self.__len_card = self.LEN_CARD_DEFAULLT
         self.__key = key
+
+        self.__path = ""
+        self.__pictures = list()
 
         self.__title = Gtk.Box()
         self.__title.set_vexpand(True)
@@ -38,17 +48,31 @@ class BoxKey(Gtk.Box):
     def get_key(self):
         return self.__key
 
-    def generate_card(self, config, path):
-        for picture in config:
+    def thread_generate_card(self, step_list):
+
+        for i in range(step_list[0], step_list[1]):
             try:
-                pc = PictureCard(path, picture)
+                pc = PictureCard(self.__path, self.__pictures[i])
                 self.__flow_box.prepend(pc)
                 self.__len_card += 1
             except:
                 print("Image non reconue")
 
+    def generate_card(self, pictures, path):
+        self.__path = path
+        self.__pictures = pictures
+        index = 0
+        OFFSET = 1
+        len_pictures = len(pictures)
+        len_step_picture = int(len_pictures/self.__core)
 
+        tasks = list()
+        tasks_step_tmp = [0,1]
+        for i in range(0, len_step_picture):
+            tasks_step_tmp[0] = len_step_picture * index
+            index+=1
+            tasks_step_tmp[1] = len_step_picture * index - OFFSET
+            tasks.append(tasks_step_tmp.copy())
 
-
-
-
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.__core) as pool:
+            pool.map(self.thread_generate_card, tasks)

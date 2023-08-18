@@ -1,4 +1,5 @@
 from .BoxKeys import BoxKey
+import time
 #TODO Support des erreur
 
 #TODO Reset liste
@@ -12,6 +13,8 @@ class PictureCardController(object):
         self.__config = dict()
         self.__main_path = str()
 
+        self.__time_generation = 0
+
         self.__list_box_key = dict()
 
     def set_path(self, path):
@@ -21,19 +24,26 @@ class PictureCardController(object):
         self.__config = config.copy()
 
     def reset(self):
-        print(self.__len_card)
-        for pc in range(self.LEN_CARD_DEFAULLT, self.__len_card):
-            child = self.__window.flow_picture_box.get_child_at_index(0)
-            print(child)
-            self.__window.flow_picture_box.remove(child)
-        self.__len_card = self.LEN_CARD_DEFAULLT
+        for key in self.__list_box_key:
+            self.__list_box_key[key].destroy()
+
+
+        # print(self.__len_card)
+        # for pc in range(self.LEN_CARD_DEFAULLT, self.__len_card):
+        #     child = self.__window.flow_picture_box.get_child_at_index(0)
+        #     print(child)
+        #     self.__window.flow_picture_box.remove(child)
+        # self.__len_card = self.LEN_CARD_DEFAULLT
 
     def generate(self):
+        self.__time_generation = time.perf_counter()
         for key in self.__config:
             box_title = self.generate_box_key(key)
 
         for key in self.__list_box_key:
             self.visible_card(key)
+        self.__time_generation = time.perf_counter() - self.__time_generation
+        print("temps d'execution", self.__time_generation)
 
     def visible_card(self, key):
         self.__list_box_key[key].set_visible(True)

@@ -84,7 +84,6 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
             picture_search = self.__ps.get_resolve_image()
             self.__pcc.set_path(path)
             self.__pcc.set_config(picture_search)
-            print(picture_search)
             self.__pcc.generate()
             self.picture_view()
         else:

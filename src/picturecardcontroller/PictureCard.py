@@ -25,7 +25,7 @@ class PictureCard(Gtk.FlowBoxChild):
         self.__label.set_wrap(True)
         self.__label.set_max_width_chars(0)
         self.__label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
-        print(self.main_input)
+        #print(self.main_input)
         self.__pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(self.main_input, self.default_width, self.default_heigth)
         self.__picture = Gtk.Picture.new_for_pixbuf(self.__pixbuf)
         self.__picture.set_can_shrink(False)
