@@ -43,18 +43,36 @@ template SortpictureresolveGuiWindow : .AdwApplicationWindow {
         visible: true;
         orientation: horizontal;
         spacing : 10;
-        valign: center;
-        halign: center;
+        valign: fill;
+        halign: fill;
         vexpand: true;
         hexpand: true;
-        Gtk.Label current_activity {
-          label: "";
-        }
-        Gtk.Button search_image {
-          label: "Chercher des Images";
-          styles ["suggested-action", "pill", "title-1"]
-        }
-        Gtk.ProgressBar wait_bar {
+        Gtk.Box {
+          orientation: horizontal;
+          valign: center;
+          halign: center;
+          vexpand: true;
+          hexpand: true;
+          Gtk.Label current_activity {
+            label: "";
+          }
+          Gtk.Button search_image {
+            valign: center;
+            halign: center;
+            label: "Chercher des Images";
+            styles ["suggested-action", "pill", "title-1"]
+          }
+
+          Gtk.ProgressBar wait_bar {
+          }
+
+          Gtk.Button {
+            visible: false;
+            halign: center;
+            valign: center;
+            icon-name: "org.gnome.settings-symbolic";
+            styles ["circular"]
+          }
         }
 
         Gtk.FlowBox flow_picture_box{
