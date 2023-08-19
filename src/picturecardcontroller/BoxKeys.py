@@ -50,11 +50,12 @@ class BoxKey(Gtk.Box):
         return self.__len_card
 
     def thread_generate_card(self, step_list):
-
-        for i in range(step_list[0], step_list[1]):
+        list_pc = list()
+        for i in range(step_list[0], step_list[1]+1):
             pc = PictureCard(self.__path, self.__pictures[i])
-            self.__list_pc.append(pc)
+            list_pc.append(pc)
             self.__len_card += 1
+        return list_pc.copy()
 
     def place_card(self):
         for pc in self.__list_pc:
@@ -63,25 +64,32 @@ class BoxKey(Gtk.Box):
 
 
     def generate_card(self, pictures, path):
+        pc_lists = list()
         self.__path = path
         self.__pictures = pictures
         index = 0
         OFFSET = 1
         len_pictures = len(pictures)
         len_step_picture = int(len_pictures/self.__core)
-
         tasks = list()
-        tasks_step_tmp = [0,1]
-        for i in range(0, len_step_picture):
+        tasks_step_tmp = [0, 0]
+
+        for i in range(0, (self.__core)):
             tasks_step_tmp[0] = len_step_picture * index
-            index+=1
+            index += 1
             tasks_step_tmp[1] = len_step_picture * index - OFFSET
             tasks.append(tasks_step_tmp.copy())
+        count_image = index*len_step_picture
+        if len_pictures > count_image:
+            tasks[index-OFFSET][1] += (len_pictures - count_image)
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.__core) as pool:
-            pool.map(self.thread_generate_card, tasks)
-        print("Generation place")
+             pc_lists = list(pool.map(self.thread_generate_card, tasks))
+
+        for pc_list in pc_lists:
+            for pc in pc_list:
+                self.__list_pc.append(pc)
+
         self.place_card()
-        print("place Gerated")
         del self.__list_pc
         del self.__pictures
