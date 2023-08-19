@@ -7,6 +7,7 @@ from .PictureCard import PictureCard
 
 class BoxKey(Gtk.Box):
     LEN_CARD_DEFAULLT = int(0)
+    core = 1
     def __init__(self, key):
         super().__init__(
             halign=Gtk.Align.FILL,
@@ -16,7 +17,7 @@ class BoxKey(Gtk.Box):
             orientation=Gtk.Orientation.VERTICAL,
             visible=False
         )
-        self.__core = multiprocessing.cpu_count()
+        self.core = multiprocessing.cpu_count()
         self.__len_card = self.LEN_CARD_DEFAULLT
         self.__key = key
 
@@ -61,8 +62,6 @@ class BoxKey(Gtk.Box):
         for pc in self.__list_pc:
             self.__flow_box.append(pc)
 
-
-
     def generate_card(self, pictures, path):
         pc_lists = list()
         self.__path = path
@@ -70,11 +69,11 @@ class BoxKey(Gtk.Box):
         index = 0
         OFFSET = 1
         len_pictures = len(pictures)
-        len_step_picture = int(len_pictures/self.__core)
+        len_step_picture = int(len_pictures/self.core)
         tasks = list()
         tasks_step_tmp = [0, 0]
 
-        for i in range(0, (self.__core)):
+        for i in range(0, (self.core)):
             tasks_step_tmp[0] = len_step_picture * index
             index += 1
             tasks_step_tmp[1] = len_step_picture * index - OFFSET
@@ -83,7 +82,7 @@ class BoxKey(Gtk.Box):
         if len_pictures > count_image:
             tasks[index-OFFSET][1] += (len_pictures - count_image)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.__core) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.core) as pool:
              pc_lists = list(pool.map(self.thread_generate_card, tasks))
 
         for pc_list in pc_lists:
@@ -91,5 +90,9 @@ class BoxKey(Gtk.Box):
                 self.__list_pc.append(pc)
 
         self.place_card()
-        del self.__list_pc
         del self.__pictures
+
+    def __del__(self):
+        del self.__title
+        del self.__path
+        del self.__list_pc

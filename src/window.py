@@ -20,7 +20,6 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
 
     APPID = "fr.daemonwhite.sortpictureresolve"
     main_box = Gtk.Template.Child("main_box")
-    flow_picture_box = Gtk.Template.Child("flow_picture_box")
     controller_bar_box =  Gtk.Template.Child("controller_bar")
 
     search_images_button = Gtk.Template.Child("search_image")
@@ -93,8 +92,8 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
 
     def reset_view(self):
         self.__pcc.hiding_all_card()
+        self.__pcc.reset()
         self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
-        self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)
         self.wait_bar.set_visible(False)
         self.search_images_button.set_visible(True)
@@ -102,14 +101,12 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
     def loading_view(self):
         self.__pcc.hiding_all_card()
         self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
-        self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(True)
 
     def picture_view(self):
         self.main_box.set_orientation(Gtk.Orientation.VERTICAL)
-        self.flow_picture_box.set_visible(True)
         self.controller_bar_box.set_visible(True)
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(False)

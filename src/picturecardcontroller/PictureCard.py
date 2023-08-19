@@ -48,5 +48,8 @@ class PictureCard(Gtk.FlowBoxChild):
     def set_main_input(self, path):
         self.main_input = path
 
+    def __del__(self):
+        del self.__box
+        del self.__label
 
 

@@ -21,8 +21,7 @@ class PictureCardController(object):
         self.__config = config.copy()
 
     def reset(self):
-        for key in self.__list_box_key:
-            self.__list_box_key[key].destroy()
+        self.__list_box_key.clear()
 
 
         # print(self.__len_card)
@@ -32,7 +31,7 @@ class PictureCardController(object):
         #     self.__window.flow_picture_box.remove(child)
         # self.__len_card = self.LEN_CARD_DEFAULLT
 
-    def generate(self):=
+    def generate(self):
         for key in self.__config:
             self.generate_box_key(key)
 
