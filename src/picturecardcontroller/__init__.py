@@ -40,10 +40,16 @@ class PictureCardController(object):
         for key in self.__config:
             box_title = self.generate_box_key(key)
 
-        for key in self.__list_box_key:
-            self.visible_card(key)
         self.__time_generation = time.perf_counter() - self.__time_generation
         print("temps d'execution", self.__time_generation)
+
+    def visible_all_card(self):
+        for key in self.__list_box_key:
+            self.visible_card(key)
+
+    def hiding_all_card(self):
+        for key in self.__list_box_key:
+            self.hiding_card(key)
 
     def visible_card(self, key):
         self.__list_box_key[key].set_visible(True)

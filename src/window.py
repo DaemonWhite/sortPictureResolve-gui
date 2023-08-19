@@ -86,12 +86,13 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
             self.__pcc.set_config(picture_search)
             self.__pcc.generate()
             self.picture_view()
+            self.__pcc.visible_all_card()
         else:
             self.reset_view()
 
-        self.wait_bar.set_visible(False)
 
     def reset_view(self):
+        self.__pcc.hiding_all_card()
         self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
         self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)
@@ -99,6 +100,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
         self.search_images_button.set_visible(True)
 
     def loading_view(self):
+        self.__pcc.hiding_all_card()
         self.main_box.set_orientation(Gtk.Orientation.HORIZONTAL)
         self.flow_picture_box.set_visible(False)
         self.controller_bar_box.set_visible(False)

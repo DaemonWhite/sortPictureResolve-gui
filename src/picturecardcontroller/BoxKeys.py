@@ -5,9 +5,6 @@ from gi.repository import Gtk, GdkPixbuf, Pango
 
 from .PictureCard import PictureCard
 
-def thread_generate_card(min):
-        return min
-
 class BoxKey(Gtk.Box):
     LEN_CARD_DEFAULLT = int(0)
     def __init__(self, key):
@@ -42,21 +39,28 @@ class BoxKey(Gtk.Box):
         self.__label_tiltle.set_valign(Gtk.Align.FILL)
         self.__label_tiltle.set_label(key)
         self.__title.append(self.__label_tiltle)
+        self.__list_pc = list()
         self.append(self.__title)
         self.append(self.__flow_box)
 
     def get_key(self):
         return self.__key
 
+    def get_len_card(self):
+        return self.__len_card
+
     def thread_generate_card(self, step_list):
 
         for i in range(step_list[0], step_list[1]):
-            try:
-                pc = PictureCard(self.__path, self.__pictures[i])
-                self.__flow_box.prepend(pc)
-                self.__len_card += 1
-            except:
-                print("Image non reconue")
+            pc = PictureCard(self.__path, self.__pictures[i])
+            self.__list_pc.append(pc)
+            self.__len_card += 1
+
+    def place_card(self):
+        for pc in self.__list_pc:
+            self.__flow_box.append(pc)
+
+
 
     def generate_card(self, pictures, path):
         self.__path = path
@@ -76,3 +80,8 @@ class BoxKey(Gtk.Box):
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.__core) as pool:
             pool.map(self.thread_generate_card, tasks)
+        print("Generation place")
+        self.place_card()
+        print("place Gerated")
+        del self.__list_pc
+        del self.__pictures
