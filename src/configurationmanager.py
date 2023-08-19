@@ -21,7 +21,6 @@ class ConfigurationManager(object):
 
     def __init__(self, APPID):
         self._settings = Gio.Settings(APPID)
-        print(not self._terminal_mode)
         self.cps.load()
         self.load_configuration()
 
@@ -76,10 +75,10 @@ class ConfigurationManager(object):
         )
 
     def toggle_recursif(self):
-        self._terminal_mode = not self._terminal_mode
+        self._recursif_mode = not self._recursif_mode
         self._settings.set_boolean(
-            self.__CONFIGURATION_NAME_TERMINAL,
-            self._terminal_mode
+            self.__CONFIGURATION_NAME_RECURSIF,
+            self._recursif_mode
         )
 
     def load_json_configuration(self):

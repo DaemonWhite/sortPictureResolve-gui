@@ -40,7 +40,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def add_action(self):
         self.switch_copy.connect('activate', self.toggle_copy)
-        self.switch_recursif.connect('activate', self.toggle_terminal)
+        self.switch_recursif.connect('activate', self.toggle_recursif)
         self.switch_terminal.connect('activate', self.toggle_terminal)
 
 
