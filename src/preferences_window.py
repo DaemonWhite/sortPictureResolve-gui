@@ -35,13 +35,25 @@ class PreferencesWindow(Adw.PreferencesWindow):
         except GLib.Error as error:
             print(f"Error opening folder: {error.message}")
 
+    def on_event_add_path_in(self, _btn, _result):
+        try:
+            path = _btn.select_folder_finish(_result).get_path()
+            self.__window.set_path_in(path)
+            self.__window.apply_settings()
+            self.__path_in.set_label(path)
+        except GLib.Error as error:
+            print(f"Error opening folder: {error.message}")
+
     def on_add_path_out(self, _btn):
         self.__FileDialog.select_folder(parent=self, callback=self.on_event_add_path_out)
 
+    def on_add_path_in(self, _btn):
+        self.__FileDialog.select_folder(parent=self, callback=self.on_event_add_path_in)
+
     def load_settings(self):
-        path_in = Gtk.Label()
-        path_in.set_label(self.__window.get_path_in())
-        self.expander_path_in.add_row(path_in)
+        self.__path_in = Gtk.Label()
+        self.__path_in.set_label(self.__window.get_path_in())
+        self.expander_path_in.add_row(self.__path_in)
         self.label_path_out.set_label(self.__window.get_path_out())
 
         self.switch_copy.set_active(self.__window.get_copy())
@@ -62,6 +74,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def add_action(self):
         self.button_open_out.connect("clicked", self.on_add_path_out)
+        self.button_open_in.connect("clicked", self.on_add_path_in)
         self.switch_copy.connect('activate', self.toggle_copy)
         self.switch_recursif.connect('activate', self.toggle_recursif)
         self.switch_terminal.connect('activate', self.toggle_terminal)
