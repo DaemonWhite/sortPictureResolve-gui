@@ -27,4 +27,6 @@ sortpictureresolve_gui_sources = [
   'configurationmanager.py'
 ]
 install_subdir('picturecardcontroller', install_dir: pkgdatadir)
+install_subdir('subpage', install_dir: pkgdatadir)
+install_subdir('drawratiocontroller', install_dir: pkgdatadir)
 install_data(sortpictureresolve_gui_sources, install_dir: moduledir)

@@ -1,5 +1,7 @@
 from gi.repository import Adw, Gtk, GLib
 
+from subpage.ratio_subpage import RatioWindow
+
 #TODO Multie preferences
 
 @Gtk.Template(resource_path='/fr/daemonwhite/sortpictureresolve/ui/preferenceswindow.ui')
@@ -75,12 +77,15 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.__window.toggle_terminal()
         self.__window.apply_settings()
 
+    def on_ratio_subpage(self, _btn):
+        print("tu est beau")
+        sub_ratio = RatioWindow(self.close_subpage)
+        self.present_subpage(sub_ratio)
+
     def add_action(self):
         self.button_open_out.connect("clicked", self.on_add_path_out)
         self.button_open_in.connect("clicked", self.on_add_path_in)
         self.switch_copy.connect('activate', self.toggle_copy)
         self.switch_recursif.connect('activate', self.toggle_recursif)
         self.switch_terminal.connect('activate', self.toggle_terminal)
-
-
-
+        self.button_add.connect('clicked', self.on_ratio_subpage)
