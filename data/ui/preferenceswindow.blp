@@ -21,6 +21,11 @@ template PreferencesWindow : .AdwPreferencesWindow {
         }
       }
       Adw.ActionRow {
+        title: "Chemin de sortie : ";
+        Gtk.Label label_path_out{
+        }
+      }
+      Adw.ActionRow {
         title: "Chemin d'entrée";
         subtitle: "Définie ou les images seront chercher";
         activatable-widget: open_in;
@@ -29,6 +34,10 @@ template PreferencesWindow : .AdwPreferencesWindow {
           halign: center;
           valign: center;
         }
+      }
+      Adw.ExpanderRow expander_path_in {
+        title: "Lister des chemin d'entrer";
+        subtitle: "Les chemins ou les images seront chercher";
       }
     }
     Adw.PreferencesGroup {

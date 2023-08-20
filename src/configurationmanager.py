@@ -41,17 +41,17 @@ class ConfigurationManager(object):
 
     def set_path_in(self, path_in):
         self._path_in = path_in
-        self.cps.set_path_in(path_in)
+        self.cps.modify_path_in(path_in)
         if self._terminal_mode:
-            self.cps.set_path_in(path_in)
+            self.cps.modify_path_in(path_in)
             self.cps.save()
         self._settings.set_string(self.__CONFIGURATION_NAME_PATH_IN,path_in)
 
-    def set_path_in(self, path_out):
+    def set_path_out(self, path_out):
         self._path_out = path_out
-        self.cps.set_path_out(path_out)
+        self.cps.modify_path_out(path_out)
         if self._terminal_mode:
-            self.cps.set_path_out(path_out)
+            self.cps.modify_path_out(path_out)
             self.cps.save()
         self._settings.set_string(self.__CONFIGURATION_NAME_PATH_OUT, path_out)
 

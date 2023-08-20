@@ -55,6 +55,7 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
     def apply_settings(self):
         self.__ps.enabled_copie_mode(self.get_copy())
         self.__ps.enabled_recursif_mode(self.get_recursif())
+        self.__ps.set_picture_out_path(self.get_path_out())
         self.__ps.default_coef()
         try :
             self.__ps.remove_extention(".gif")
