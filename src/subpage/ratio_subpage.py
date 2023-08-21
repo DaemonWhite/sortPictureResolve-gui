@@ -13,6 +13,8 @@ class RatioWindow(Gtk.Box):
         )
         self.__close_callback = close_callback
         self.__main_box = Gtk.Box()
+        self.__tool_box = Gtk.Box()
+        self.__tool_box.append(Gtk.Label(label="tu es beau"))
         self.__header_bar = Adw.HeaderBar()
         self.__close_button = Gtk.Button()
 
@@ -20,16 +22,11 @@ class RatioWindow(Gtk.Box):
         self.__draw_area.set_vexpand(True)
         self.__draw_area.set_hexpand(True)
 
-        self.__draw_area.set_draw_func(self.draw, None)
-
-        evk = Gtk.GestureClick.new()
-        evk.connect("pressed", self.dw_click)  # could be "released"
-        self.__draw_area.add_controller(evk)
-
-        self.blobs = []
+        self.__draw_area.set_draw_func(self.__draw_area.draw, None)
 
         self.__header_bar.pack_start(self.__close_button)
 
+        self.__main_box.append(self.__tool_box)
         self.__main_box.append(self.__draw_area)
 
         self.append(self.__header_bar)
@@ -43,11 +40,6 @@ class RatioWindow(Gtk.Box):
 
     def add_action(self):
         self.__close_button.connect('clicked', self.close)
-
-    def dw_click(self, gesture, data, x, y):
-        print(x,y)
-        self.blobs.append((x, y))
-        self.__draw_area.queue_draw()
 
 
     def draw(self, area, c, w, h, data):
