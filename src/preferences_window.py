@@ -78,8 +78,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.__window.apply_settings()
 
     def on_ratio_subpage(self, _btn):
-        print("tu est beau")
-        sub_ratio = RatioWindow(self.close_subpage)
+        sub_ratio = RatioWindow(self.close_subpage, self.__window)
+        coefficients = self.__window.get_all_coefficient()
         self.present_subpage(sub_ratio)
 
     def add_action(self):

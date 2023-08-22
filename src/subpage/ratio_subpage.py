@@ -7,10 +7,12 @@ class RatioWindow(Gtk.Box):
 
     draw_area = Gtk.Template.Child("draw_area")
 
-    def __init__(self, close_callback):
+    def __init__(self, close_callback, window):
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL
         )
+        self.__window = window
+
         self.__close_callback = close_callback
         self.__main_box = Gtk.Box()
         self.__tool_box = Gtk.Box()
@@ -23,6 +25,17 @@ class RatioWindow(Gtk.Box):
         self.__draw_area.set_hexpand(True)
 
         self.__draw_area.set_draw_func(self.__draw_area.draw, None)
+
+        coefficients = self.__window.get_all_coefficient()
+        print(coefficients)
+        for key in coefficients:
+            self.__draw_area.add_rectangle(
+                0,
+                0,
+                coefficients[key]["max_width"]/4,
+                coefficients[key]["max_height"]/4,
+                10
+            )
 
         self.__header_bar.pack_start(self.__close_button)
 
@@ -41,37 +54,6 @@ class RatioWindow(Gtk.Box):
     def add_action(self):
         self.__close_button.connect('clicked', self.close)
 
-
-    def draw(self, area, c, w, h, data):
-        # c is a Cairo context
-
-        # Fill background with a colour
-
-        c.set_source_rgb(0, 0, 0)
-        c.paint()
-
-        # Draw a line
-        c.set_source_rgb(0.5, 0.0, 0.5)
-        c.set_line_width(3)
-        c.move_to(10, 10)
-        c.line_to(w - 10, h - 10)
-        c.stroke()
-
-        for x, y in self.blobs:
-            c.arc(x, y, 10, 0, 2 * 3.1415926)
-            c.fill()
-
-        # Draw a rectangle
-        c.set_source_rgb(0.8, 0.8, 0.0)
-        c.rectangle(20, 20, 50, 20)
-        c.fill()
-
-        # Draw some text
-        c.set_source_rgb(0.1, 0.1, 0.1)
-        c.select_font_face("Sans")
-        c.set_font_size(13)
-        c.move_to(25, 35)
-        c.show_text("Test")
 
 
 

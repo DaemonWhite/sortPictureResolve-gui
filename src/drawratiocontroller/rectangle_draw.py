@@ -1,7 +1,6 @@
 
 class RectangleDraw(object):
     radius = float(6)
-    count_rectangle = 0
     DEFAULT_OFSSET = 0
     def __init__(self,
             X_left,
@@ -9,7 +8,6 @@ class RectangleDraw(object):
             X_rigth,
             Y_rigth,
         ):
-        self.__rectangle_id = self.count_rectangle
 
         self.__X_left = X_left
         self.__Y_left = Y_left
@@ -56,9 +54,6 @@ class RectangleDraw(object):
             self.cursor_select(self.__cursor_rigth, x, y)
             and self.__enable_cursor_rigth
         )
-
-    def get_id(self):
-        return self.__rectangle_id
 
     def get_cursot_left(self):
         return self.__cursor_left.copy()
