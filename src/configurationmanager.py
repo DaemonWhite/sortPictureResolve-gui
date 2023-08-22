@@ -33,6 +33,9 @@ class ConfigurationManager(object):
     def get_recursif(self):
         return self._recursif_mode
 
+    def get_all_coefficient(self):
+        return self.__coefficient.copy()
+
     def get_copy(self):
         return self._copy_mode
 
@@ -99,6 +102,7 @@ class ConfigurationManager(object):
 
     def load_configuration(self):
         self._terminal_mode = self._settings.get_boolean("terminal-mode")
+        self.__coefficient = self.cps.get_all_coefficient()
 
         if self._settings.get_boolean("first-start"):
             if self.cps.get_default():
