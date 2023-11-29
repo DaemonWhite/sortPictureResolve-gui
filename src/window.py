@@ -115,27 +115,6 @@ class SortpictureresolveGuiWindow(Adw.ApplicationWindow, ConfigurationManager):
         self.search_images_button.set_visible(False)
         self.wait_bar.set_visible(False)
 
-    def reset_json_configuration(self):
-        pc_old = [1800, 1200]
-        phone = [1090, 1200]
-        null = 0
-        pc_standar = [2000, 1000]
-        pc_large = [2960, 1040]
-        ps = Picture_sorter()
-        self.__cps.modify_path_in(ps.get_picture_in_path())
-        self.__cps.modify_path_out(ps.get_picture_out_path())
-        self.__cps.add_coefficient(
-            "pc-stadart", pc_old[0], pc_old[1], pc_standar[0], pc_standar[1]
-        )
-        self.__cps.add_coefficient("pc-old", phone[0], phone[1], pc_old[0], pc_old[1])
-        self.__cps.add_coefficient("phone", null, null, phone[0], phone[1])
-        self.__cps.add_coefficient(
-            "pc-large", pc_standar[0], pc_standar[1], pc_large[0], pc_large[1]
-        )
-        self.__cps.disable_default()
-        self.__cps.save()
-        del ps
-
     def finish_sort_image(self):
         self.reset_view()
 

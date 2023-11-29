@@ -1,6 +1,6 @@
 from gi.repository import Gio
 
-from LibPictureSorter import ConfigPictureSorter
+from LibPictureSorter import ConfigPictureSorter, Picture_sorter
 
 class ConfigurationManager(object):
 
@@ -112,3 +112,24 @@ class ConfigurationManager(object):
             self.load_json_configuration()
         else:
             self.load_gschema_configuration()
+
+    def reset_json_configuration(self):
+        pc_old = [1800, 1200]
+        phone = [1090, 1200]
+        null = 0
+        pc_standar = [2000, 1000]
+        pc_large = [2960, 1040]
+        ps = Picture_sorter()
+        self.cps.modify_path_in(ps.get_picture_in_path())
+        self.cps.modify_path_out(ps.get_picture_out_path())
+        self.cps.add_coefficient(
+            "pc-stadart", pc_old[0], pc_old[1], pc_standar[0], pc_standar[1]
+        )
+        self.cps.add_coefficient("pc-old", phone[0], phone[1], pc_old[0], pc_old[1])
+        self.cps.add_coefficient("phone", null, null, phone[0], phone[1])
+        self.cps.add_coefficient(
+            "pc-large", pc_standar[0], pc_standar[1], pc_large[0], pc_large[1]
+        )
+        self.cps.disable_default()
+        self.cps.save()
+        del ps
